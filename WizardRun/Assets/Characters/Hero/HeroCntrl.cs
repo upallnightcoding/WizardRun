@@ -11,6 +11,7 @@ public class HeroCntrl : MonoBehaviour
     private Vector3 moveDirection;
 
     private CharacterController controller;
+    private Animator animator;
 
     private HeroState heroState = HeroState.IDLE;
 
@@ -18,6 +19,7 @@ public class HeroCntrl : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -34,7 +36,21 @@ public class HeroCntrl : MonoBehaviour
         }
     }
 
-    private void Move() 
+    private void Move() {
+        if (Input.GetKeyDown(KeyCode.D)) {
+            animator.SetInteger("state", (int)HeroState.WALK);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S)) {
+            animator.SetInteger("state", (int)HeroState.RUN);
+        }
+
+        if (Input.GetKeyDown(KeyCode.A)) {
+            animator.SetInteger("state", (int)HeroState.TURN);
+        }
+    }
+
+    private void xMove() 
     {
         float xdirection = Input.GetAxis("Horizontal");
         Debug.Log($"Direction: {xdirection}");
@@ -47,8 +63,9 @@ public class HeroCntrl : MonoBehaviour
 }
 
 public enum HeroState {
-    IDLE = 0,
-    WALK = 1,
-    RUN = 2,
-    JUMP = 3
+    IDLE = 1,
+    WALK = 2,
+    RUN = 3,
+    JUMP = 4,
+    TURN = 5
 }
